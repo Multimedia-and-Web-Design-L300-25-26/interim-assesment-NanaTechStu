@@ -12,10 +12,10 @@ export function useCrypto() {
     // Simulate an API fetch with a small delay
     const timer = setTimeout(() => {
       try {
-        // TODO: Replace with real API call:
-        // const res = await fetch('/api/crypto');
-        // const data = await res.json();
-        setAssets(cryptoData);
+        // Fetch from real backend
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/crypto`);
+        const data = await res.json();
+        setAssets(data.data);
       } catch (err) {
         setError('Failed to load crypto data');
       } finally {

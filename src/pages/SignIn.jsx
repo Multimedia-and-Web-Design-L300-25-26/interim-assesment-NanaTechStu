@@ -41,9 +41,15 @@ export default function SignIn() {
       // if (!res.ok) throw new Error(data.message);
       // login(data.user, data.token);
 
-      // --- Mock login for demo ---
-      await new Promise((r) => setTimeout(r, 800));
-      login({ name: form.email.split('@')[0], email: form.email }, 'mock-jwt-token');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: form.email, password: form.password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      login(data.user, data.token);
       navigate(from, { replace: true });
     } catch (err) {
       setApiError(err.message || 'Invalid email or password');

@@ -37,7 +37,7 @@ const cryptoSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    isNew: {
+    newListing: {
       type: Boolean,
       default: true, // Newly added coins are flagged as new
     },

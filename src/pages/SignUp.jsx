@@ -41,9 +41,15 @@ export default function SignUp() {
       // if (!res.ok) throw new Error(data.message);
       // login(data.user, data.token);
 
-      // --- Mock register for demo ---
-      await new Promise((r) => setTimeout(r, 800));
-      login({ name: form.name, email: form.email }, 'mock-jwt-token');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ name: form.name, email: form.email, password: form.password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      login(data.user, data.token);
       navigate('/');
     } catch (err) {
       setApiError(err.message || 'Registration failed. Please try again.');
